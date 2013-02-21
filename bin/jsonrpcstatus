@@ -1,0 +1,195 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+# taken from http://www.jsonrpc.org/specification#error_object
+my $status_map = {
+    -32700 => 'Parse Error',
+    -32600 => 'Invalid Request',
+    -32601 => 'Method Not Found',
+    -32602 => 'Invalid Params',
+    -32603 => 'Internal Server Error',
+    -32000 => 'Server Error (Reserved)',
+    -32001 => 'Server Error (Reserved)',
+    -32002 => 'Server Error (Reserved)',
+    -32003 => 'Server Error (Reserved)',
+    -32004 => 'Server Error (Reserved)',
+    -32005 => 'Server Error (Reserved)',
+    -32006 => 'Server Error (Reserved)',
+    -32007 => 'Server Error (Reserved)',
+    -32008 => 'Server Error (Reserved)',
+    -32009 => 'Server Error (Reserved)',
+    -32010 => 'Server Error (Reserved)',
+    -32011 => 'Server Error (Reserved)',
+    -32012 => 'Server Error (Reserved)',
+    -32013 => 'Server Error (Reserved)',
+    -32014 => 'Server Error (Reserved)',
+    -32015 => 'Server Error (Reserved)',
+    -32016 => 'Server Error (Reserved)',
+    -32017 => 'Server Error (Reserved)',
+    -32018 => 'Server Error (Reserved)',
+    -32019 => 'Server Error (Reserved)',
+    -32020 => 'Server Error (Reserved)',
+    -32021 => 'Server Error (Reserved)',
+    -32022 => 'Server Error (Reserved)',
+    -32023 => 'Server Error (Reserved)',
+    -32024 => 'Server Error (Reserved)',
+    -32025 => 'Server Error (Reserved)',
+    -32026 => 'Server Error (Reserved)',
+    -32027 => 'Server Error (Reserved)',
+    -32028 => 'Server Error (Reserved)',
+    -32029 => 'Server Error (Reserved)',
+    -32030 => 'Server Error (Reserved)',
+    -32031 => 'Server Error (Reserved)',
+    -32032 => 'Server Error (Reserved)',
+    -32033 => 'Server Error (Reserved)',
+    -32034 => 'Server Error (Reserved)',
+    -32035 => 'Server Error (Reserved)',
+    -32036 => 'Server Error (Reserved)',
+    -32037 => 'Server Error (Reserved)',
+    -32038 => 'Server Error (Reserved)',
+    -32039 => 'Server Error (Reserved)',
+    -32040 => 'Server Error (Reserved)',
+    -32041 => 'Server Error (Reserved)',
+    -32042 => 'Server Error (Reserved)',
+    -32043 => 'Server Error (Reserved)',
+    -32044 => 'Server Error (Reserved)',
+    -32045 => 'Server Error (Reserved)',
+    -32046 => 'Server Error (Reserved)',
+    -32047 => 'Server Error (Reserved)',
+    -32048 => 'Server Error (Reserved)',
+    -32049 => 'Server Error (Reserved)',
+    -32050 => 'Server Error (Reserved)',
+    -32051 => 'Server Error (Reserved)',
+    -32052 => 'Server Error (Reserved)',
+    -32053 => 'Server Error (Reserved)',
+    -32054 => 'Server Error (Reserved)',
+    -32055 => 'Server Error (Reserved)',
+    -32056 => 'Server Error (Reserved)',
+    -32057 => 'Server Error (Reserved)',
+    -32058 => 'Server Error (Reserved)',
+    -32059 => 'Server Error (Reserved)',
+    -32060 => 'Server Error (Reserved)',
+    -32061 => 'Server Error (Reserved)',
+    -32062 => 'Server Error (Reserved)',
+    -32063 => 'Server Error (Reserved)',
+    -32064 => 'Server Error (Reserved)',
+    -32065 => 'Server Error (Reserved)',
+    -32066 => 'Server Error (Reserved)',
+    -32067 => 'Server Error (Reserved)',
+    -32068 => 'Server Error (Reserved)',
+    -32069 => 'Server Error (Reserved)',
+    -32070 => 'Server Error (Reserved)',
+    -32071 => 'Server Error (Reserved)',
+    -32072 => 'Server Error (Reserved)',
+    -32073 => 'Server Error (Reserved)',
+    -32074 => 'Server Error (Reserved)',
+    -32075 => 'Server Error (Reserved)',
+    -32076 => 'Server Error (Reserved)',
+    -32077 => 'Server Error (Reserved)',
+    -32078 => 'Server Error (Reserved)',
+    -32079 => 'Server Error (Reserved)',
+    -32080 => 'Server Error (Reserved)',
+    -32081 => 'Server Error (Reserved)',
+    -32082 => 'Server Error (Reserved)',
+    -32083 => 'Server Error (Reserved)',
+    -32084 => 'Server Error (Reserved)',
+    -32085 => 'Server Error (Reserved)',
+    -32086 => 'Server Error (Reserved)',
+    -32087 => 'Server Error (Reserved)',
+    -32088 => 'Server Error (Reserved)',
+    -32089 => 'Server Error (Reserved)',
+    -32090 => 'Server Error (Reserved)',
+    -32091 => 'Server Error (Reserved)',
+    -32092 => 'Server Error (Reserved)',
+    -32093 => 'Server Error (Reserved)',
+    -32094 => 'Server Error (Reserved)',
+    -32095 => 'Server Error (Reserved)',
+    -32096 => 'Server Error (Reserved)',
+    -32097 => 'Server Error (Reserved)',
+    -32098 => 'Server Error (Reserved)',
+    -32099 => 'Server Error (Reserved)',
+};
+
+if (@ARGV == 1) {
+    my $key = shift @ARGV;
+    if (my $msg = $status_map->{$key}) {
+        # jsonrpcstatus -32700
+        # jsonrpcstatus -32603
+        printf "%s\n", $msg;
+    }
+    elsif ($key =~ /^-32/ || $key =~ /^[076]/) {
+        $key = "-32$key" unless $key =~ /^-32/;
+        # jsonrpcstatus -327
+        # jsonrpcstatus 60
+        for (sort { $b <=> $a } keys %$status_map) {
+            next unless /^$key/;
+            print "$_ $status_map->{$_}\n";
+        }
+    }
+    else {
+        # jsonrpcstatus Parse
+        # jsonrpcstatus Invalid
+        for (sort { $b <=> $a } keys %$status_map) {
+            next unless $status_map->{$_} =~ /$key/i;
+            print "$_ $status_map->{$_}\n";
+        }
+    }
+}
+else {
+    # List all jsonrpc status
+    for (sort { $b <=> $a } keys %$status_map) {
+        print "$_ $status_map->{$_}\n";
+    }
+}
+
+__END__
+=encoding utf-8
+
+=for stopwords
+
+=head1 NAME
+
+jsonrpcstatus - Display JSON-RPC error status code information
+
+=head1 SYNOPSIS
+
+  # List -327xx status
+  % jsonrpcstatus 7
+  -32700 Parse Error
+
+  % jsonrpcstatus -32601
+  Method Not Found
+
+  # grep status messages
+  % jsonrpcstatus Invalid
+  -32600 Invalid Request
+  -32602 Invalid Params
+
+  # Display all messages
+  % jsonrpcstatus
+  ...
+
+=head1 DESCRIPTION
+
+App::jsonrpcstatus is a simple application to display information about JSON-RPC error status code.
+
+=head1 AUTHOR
+
+xaicron E<lt>xaicron@cpan.orgE<gt>
+
+=head1 SEE ALSO
+
+L<< http://www.jsonrpc.org/specification#error_object >>
+
+=head1 COPYRIGHT
+
+Copyright 2012 - xaicron
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut

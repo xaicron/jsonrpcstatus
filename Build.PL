@@ -19,7 +19,7 @@ my $build = Module::Build->new(
     name        => 'App-jsonrpcstatus',
     module_name => 'App::jsonrpcstatus',
 
-    # script_files => [''],
+    script_files => ['bin/jsonrpcstatus'],
 
     test_files           => (-d '.git' || $ENV{RELEASE_TESTING}) ? 't/ xt/' : 't/',
     recursive_test_files => 1,

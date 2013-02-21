@@ -14,19 +14,7 @@ __END__
 
 =head1 NAME
 
-App::jsonrpcstatus - blah blah blah
-
-=head1 SYNOPSIS
-
-  use App::jsonrpcstatus;
-
-=head1 DESCRIPTION
-
-App::jsonrpcstatus is
-
-=head1 AUTHOR
-
-Yuji Shimada E<lt>xaicron {@} GMAIL.COME<gt>
+App::jsonrpcstatus - jsonrpcstatus
 
 =head1 COPYRIGHT
 
@@ -36,7 +24,5 @@ Copyright 2013 - Yuji Shimada
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
-
-=head1 SEE ALSO
 
 =cut
